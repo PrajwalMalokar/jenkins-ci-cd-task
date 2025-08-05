@@ -1,12 +1,21 @@
 {
   "name": "day-2",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple Node.js web server with CI/CD pipeline",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node main.js",
+    "dev": "node main.js",
+    "test": "node test.js",
+    "test:basic": "node -c main.js && echo 'Syntax check passed'",
+    "lint": "echo 'Running lint checks...' && node -c main.js",
+    "build": "echo 'Build completed successfully'",
+    "health-check": "curl -f http://localhost:3000/api/status"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "keywords": ["nodejs", "web-server", "ci-cd", "jenkins"],
+  "author": "Prajwal",
+  "license": "ISC",
+  "engines": {
+    "node": ">=14.0.0"
+  }
 }
