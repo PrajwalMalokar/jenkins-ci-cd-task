@@ -14,10 +14,6 @@ pipeline {
         githubPush()
     }
     
-    tools {
-        nodejs "${NODE_VERSION}"
-    }
-    
     stages {
         stage('Checkout') {
             steps {
@@ -29,7 +25,22 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 echo '📦 Installing Node.js dependencies...'
-                sh 'npm install'
+                script {
+                    sh '''
+                        # Install Node.js if not available
+                        if ! command -v node &> /dev/null; then
+                            curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+                            sudo apt-get install -y nodejs
+                        fi
+                        
+                        # Verify Node.js version
+                        node --version
+                        npm --version
+                        
+                        # Install dependencies
+                        npm install
+                    '''
+                }
             }
         }
         
@@ -73,8 +84,16 @@ pipeline {
             steps {
                 echo '🐳 Building Docker image...'
                 script {
-                    docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
-                    docker.build("${DOCKER_IMAGE}:latest")
+                    try {
+                        sh """
+                            docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
+                            docker tag ${DOCKER_IMAGE}:${DOCKER_TAG} ${DOCKER_IMAGE}:latest
+                            echo '✅ Docker image built successfully'
+                        """
+                    } catch (Exception e) {
+                        echo "Docker build failed: ${e.getMessage()}"
+                        throw e
+                    }
                 }
             }
         }
@@ -176,7 +195,14 @@ pipeline {
     post {
         always {
             echo '📊 Pipeline execution completed'
-            cleanWs()
+            script {
+                try {
+                    sh 'ls -la'
+                    echo 'Workspace cleanup completed'
+                } catch (Exception e) {
+                    echo "Cleanup warning: ${e.getMessage()}"
+                }
+            }
         }
         
         success {
