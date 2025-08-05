@@ -7,6 +7,11 @@ pipeline {
         DOCKER_IMAGE = 'my-js-app'
         DOCKER_TAG = "${BUILD_NUMBER}"
         PORT = '3000'
+        GITHUB_REPO = 'https://github.com/PrajwalMalokar/jenkins-ci-cd-task.git'
+    }
+    
+    triggers {
+        githubPush()
     }
     
     tools {
