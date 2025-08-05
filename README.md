@@ -24,6 +24,13 @@ This project demonstrates a modern DevOps workflow with automated building, test
 ├── main.js                 # Main Node.js application
 ├── test.js                 # Test suite
 ├── package.json            # Node.js dependencies
+├── screenshots/            # Visual documentation
+│   ├── README.md          # Screenshot guidelines
+│   ├── github-webhook.png # GitHub webhook setup
+│   ├── jenkins-dashboard.png # Jenkins main dashboard
+│   ├── jenkins-project-view.png # Project page view
+│   ├── jenkins-pipeline-execution.png # Pipeline stages
+│   └── jenkins-console-output.png # Build console logs
 └── README.md              # Project documentation
 ```
 
@@ -146,6 +153,10 @@ curl http://localhost:3000/api/status
    Active: ✅
    ```
 
+### GitHub Webhook Screenshot
+![GitHub Webhook Configuration](screenshots/github-webhook.png)
+*GitHub webhook configuration showing successful setup with Jenkins endpoint*
+
 ### Jenkins Configuration
 
 1. Install required plugins:
@@ -161,6 +172,24 @@ curl http://localhost:3000/api/status
    - Branch: `*/main`
    - Script Path: `Jenkinsfile`
    - Enable: "GitHub hook trigger for GITScm polling"
+
+### Jenkins Dashboard Screenshots
+
+#### Jenkins Main Dashboard
+![Jenkins Dashboard](screenshots/jenkins-dashboard.png)
+*Jenkins main dashboard showing all configured projects and build status*
+
+#### Pipeline Project View
+![Jenkins Pipeline Project](screenshots/jenkins-project-view.png)
+*Individual project view showing build history and pipeline stages*
+
+#### Pipeline Execution
+![Jenkins Pipeline Execution](screenshots/jenkins-pipeline-execution.png)
+*Detailed view of pipeline execution showing all 9 stages and their status*
+
+#### Pipeline Build Console Output
+![Jenkins Console Output](screenshots/jenkins-console-output.png)
+*Console output showing successful build execution with all stages completed*
 
 ## 📊 Testing
 
